@@ -4,14 +4,21 @@ const server = http.createServer((req, res) => {
     const url = req.url;
     const method = req.method;
     if(req.url === '/'){
-        res.setHeader('Content-Type', 'text/html');
-        res.end(`
-            <form action="/message" method="POST">
-            <label>Name:</label>
-            <input type="text" name="Username">
-            <button type="submit">Add</button>
-            </form>
-        `);
+        fs.readFile('formvalues.txt', 'utf8', (err, data) => {
+            const messages = data ? data.split('\n').map(msg => `<p>${msg}</p>`).join('') : '';
+            res.setHeader('Content-Type', 'text/html');
+            res.end(`
+                <div>
+                 ${messages}
+                </div>
+
+                <form action="/message" method="POST">
+                <label>Name:</label>
+                <input type="text" name="Username">
+                <button type="submit">Add</button>
+                </form>
+          `);
+        });
     }else if(url === '/message'){
         res.setHeader('Content-Type', 'text/html');
         let datachunks = [];
