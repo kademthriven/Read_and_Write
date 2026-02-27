@@ -39,7 +39,8 @@ const requestHandler = (req, res) => {
         if(req.url ==='/read'){
             fs.readFile('formvalues.txt', (err, data) => {
                 console.log(data.toString());
-                res.end(`<h1>${data.toString()}</h1>`);
+                res.end(`<h1>${data.toString()}</h1>
+                <h2>iam reading the file</h2>`);
             });
         }
     }
